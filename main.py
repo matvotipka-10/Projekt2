@@ -25,9 +25,38 @@ def random_number() -> int:
                 random_list_number[0] = n
     random_number = int(''.join(map(str, random_list_number)))
     return random_number
+    
+def player_guess() -> str:
+    """
+    Hráč zadává svůj tip na čtyřmístné číslo.
+    """
+    player_number = (input(">>> "))        
+    return player_number
 
-def player_guess(number: int) -> bool:
-    input(">>> ")
+def control_player_number(player_number: str) -> bool:
+    """
+    Funkce přijme string. Zkontroluje postupně: délka je 4, obsahuje jen číslice,
+    nezačíná "0", nemá duplicitní znaky. Pokud je vše splněno vrátí True, jinak vždy vrátí False.
+    """
+    if len(player_number) != 4:
+        print("You did not enter a 4 digit number.")
+        return False
+    if not player_number.isdigit():
+        print("You did not enter a number.")
+        return False
+    if player_number [0] == "0":
+        print("Your number starts with 0.")
+        return False
+    if not len(player_number) == len(set(player_number)):
+        print("There are duplicates in your number.")
+        return False
+    else:
+        return True
+ 
+
+                    
+    
+
 
 
 
@@ -37,7 +66,7 @@ def player_guess(number: int) -> bool:
 #    if 
 
 
-# Proč by měla fce greeting vracet int? to moc nedává smysl
+
 
 
 
@@ -47,3 +76,4 @@ def player_guess(number: int) -> bool:
 
 greeting()
 random_number()
+player_guess()
