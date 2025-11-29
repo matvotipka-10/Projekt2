@@ -1,21 +1,25 @@
 import random
 import time
 
+separator = ("-----------------------------------------------")
+
 def greeting():
-    """Funkce pozdraví hráče."""
-    print("""
+    """Greets player."""
+    print(f"""
 Hi there!
------------------------------------------------
+{separator}
 I've generated a random 4 digit number for you.
 Let's play a bulls and cows game.
------------------------------------------------
+{separator}
 Enter a number:
------------------------------------------------""")
+{separator}""")
 
 def random_number() -> str:
     """
-    Funkce vrací string náhodného čtyřmístného čísla.
-    Nesmí začínat 0 a číslice se nejsmějí opakovat.
+    Returns a string of a random four-digit number.
+    The number must not start with 0 and the digits must not be repeated.
+    If the number starts with 0, the function replaces it with a random digit
+    that is not part of the four-digit number.
     """
     list_number = list(range(0,10))
     random_list_number = random.sample(list_number, 4)
@@ -28,40 +32,42 @@ def random_number() -> str:
     
 def player_guess() -> str:
     """
-    Funcke vrací hráčův tip na čtyřmístné číslo.
+    Returns player's guess for a four-digit number.
     """
     player_number = (input(">>> "))        
     return (player_number)
 
 def control_player_number(player_number: str) -> bool:
     """
-    Funkce přijme string (hráčův tip). Zkontroluje postupně: délka je 4, obsahuje jen číslice,
-    nezačíná "0", nemá duplicitní znaky. Pokud je vše splněno vrátí True, jinak vrátí False.
+    Accepts a string (player's guess). 
+    It checks if: length is 4, contains only digits,
+    does not start with "0", does not have duplicate characters. 
+    If all is met it returns True, otherwise it returns False. 
     """
     if len(player_number) != 4:
-        print("""You did not enter a 4 digit number.
------------------------------------------------""")
+        print(f"""You did not enter a 4 digit number.
+{separator}""")
         return False
     if not player_number.isdigit():
-        print("""You did not enter a number.
------------------------------------------------""")
+        print(f"""You did not enter a number.
+{separator}""")
         return False
     if player_number[0] == "0":
-        print("""Your number starts with 0.
------------------------------------------------""")
+        print(f"""Your number starts with 0.
+{separator}""")
         return False
     if not len(player_number) == len(set(player_number)):
-        print("""There are duplicates in your number.
------------------------------------------------""")
+        print(f"""There are duplicates in your number.
+{separator}""")
         return False
     else:
         return True
  
 def compare_numbers(player_number: str, random_number: str) -> int:
     """
-    Funkce porovnává číslice z player_number a random_number. Pokud je číslice stejná
-    a zároveň na stejné pozici, znamená to 1 bull. Pokud se číslice jen nachází,
-    ale není na stejné pozici jedná se o cow.
+    Compares the digits from player_number and random_number.
+    If the digit is the same and in the same position, it means 1 bull.
+    If the digit is in random_number but not at the same position, it is 1 cow.
     random_number = 2017
     player number = 2107
     bulls = 2
@@ -69,25 +75,20 @@ def compare_numbers(player_number: str, random_number: str) -> int:
     """
     bulls = 0
     cows = 0
-    for i in range(len(player_number)):
-        if player_number[i] == random_number[i]:
+    for index, digit in enumerate(player_number):
+        if digit == random_number[index]:
             bulls += 1  
         else:    
-            if player_number[i] in random_number:
+            if digit in random_number:
                     cows += 1
-    
-    if bulls <= 1 and cows <= 1:
-        print(f"""{bulls} bull, {cows} cow
------------------------------------------------""")
-    elif bulls >= 2 and cows <= 1:
-        print(f"""{bulls} bulls, {cows} cow
------------------------------------------------""")
-    elif bulls <= 1 and cows >= 2:
-        print(f"""{bulls} bull, {cows} cows
------------------------------------------------""")
-    else:
-        print(f"""{bulls} bulls, {cows} cows
------------------------------------------------""")    
+    bull_or_bulls = ("bulls")
+    if bulls == 1:
+        bull_or_bulls = ("bull")
+    cow_or_cows = ("cows")
+    if cows == 1:
+        cow_or_cows = ("cow")
+    print(f"""{bulls} {bull_or_bulls}, {cows} {cow_or_cows}
+{separator}""")
     return bulls
     
 if __name__ == "__main__":
@@ -105,7 +106,7 @@ if __name__ == "__main__":
                 print(f"""Correct, you've guessed the right number
 in {guesses} guesses.
 Time: {duration:.2f} seconds.
------------------------------------------------
+{separator}
 That's amazing!""")
                 break
 
