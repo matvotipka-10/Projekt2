@@ -19,7 +19,7 @@ def random_number() -> str:
     """
     list_number = list(range(0,10))
     random_list_number = random.sample(list_number, 4)
-    if random_list_number [0] == 0:
+    if random_list_number[0] == 0:
         for n in list_number:
             if n != 0 and n not in random_list_number:
                 random_list_number[0] = n
@@ -46,7 +46,7 @@ def control_player_number(player_number: str) -> bool:
         print("""You did not enter a number.
 -----------------------------------------------""")
         return False
-    if player_number [0] == "0":
+    if player_number[0] == "0":
         print("""Your number starts with 0.
 -----------------------------------------------""")
         return False
@@ -57,7 +57,7 @@ def control_player_number(player_number: str) -> bool:
     else:
         return True
  
-def compare_numbers(player_number: str, random_number: str) -> tuple:
+def compare_numbers(player_number: str, random_number: str) -> int:
     """
     Funkce porovnává číslice z player_number a random_number. Pokud je číslice stejná
     a zároveň na stejné pozici, znamená to 1 bull. Pokud se číslice jen nachází,
@@ -88,20 +88,19 @@ def compare_numbers(player_number: str, random_number: str) -> tuple:
     else:
         print(f"""{bulls} bulls, {cows} cows
 -----------------------------------------------""")    
-    
     return bulls
     
 if __name__ == "__main__":
     greeting()
-    x = random_number()
+    random_num = random_number()
     guesses = 0
-    start_time = time.time
+    start_time = time.time()
     while True:
-        player = player_guess()
+        player_num = player_guess()
         guesses += 1
-        if control_player_number(player) is True:
-            if compare_numbers(player, x) == 4:
-                end_time = time.time
+        if control_player_number(player_num) is True:
+            if compare_numbers(player_num, random_num) == 4:
+                end_time = time.time()
                 duration = end_time - start_time
                 print(f"""Correct, you've guessed the right number
 in {guesses} guesses.
